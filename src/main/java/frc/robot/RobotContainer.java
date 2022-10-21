@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DistanceAuto;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TimedAutoDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -19,18 +21,22 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // The robot's subsystems and commands are defined/declared here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final static DriveTrain drive = new DriveTrain();
+  private final TimedAutoDrive m_autoCommand = new TimedAutoDrive();
+  private final static DriveTrain drive =  new DriveTrain();
+  private final static DistanceAuto distanceAuto = new DistanceAuto(1.0);
+  private static Joystick joy;
   private static Joystick joy1;
-  private static Joystick joy2;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    //instantiating joystick
+    joy = new Joystick(Constants.joy1);
+    joy1 = new Joystick(Constants.joy2);
+
     // Configure the button bindings
-    joy1 = new Joystick(Constants.joy1);
-    joy2 = new Joystick(Constants.joy2);
     configureButtonBindings();
   }
 
@@ -49,14 +55,18 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return distanceAuto;
   }
+
+  //getters to use instatiated subsystems/joysticks throughout rest of code
+  public static Joystick getJoy(){
+    return joy;
+  }
+
   public static Joystick getJoy1(){
     return joy1;
   }
-  public static Joystick getJoy2(){
-    return joy2;
-  }
+
   public static DriveTrain getDrive(){
     return drive;
   }
