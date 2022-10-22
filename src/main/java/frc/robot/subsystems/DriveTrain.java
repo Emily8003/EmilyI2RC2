@@ -12,13 +12,14 @@ import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class DriveTrain extends SubsystemBase {
 
   //left and right talon motors
-  private WPI_TalonSRX left = new WPI_TalonSRX(RobotMap.leftDrivePort);
-  private WPI_TalonSRX right = new WPI_TalonSRX(RobotMap.rightDrivePort);
+  private WPI_TalonSRX left = new WPI_TalonSRX(Constants.leftPort);
+  private WPI_TalonSRX right = new WPI_TalonSRX(Constants.rightPort);
   private double ticksToMeters = (127.0/10581.0)/100.0;
 
   //navX (gyro--returns angle)
